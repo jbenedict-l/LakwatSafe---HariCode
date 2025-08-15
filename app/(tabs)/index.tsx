@@ -1,75 +1,441 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { useRef } from 'react';
+import {
+    Animated,
+    Dimensions,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const { width } = Dimensions.get('window');
 
 export default function HomeScreen() {
+  const scrollViewRef = useRef<ScrollView>(null);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(50)).current;
+
+  React.useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
+  const handleContinue = () => {
+    // For Expo Router navigation
+    router.push('/(tabs)/explore'); // or wherever you want to go
+  };
+
+  const handleAuth = () => {
+    // Navigate to auth screen
+    router.push('/auth'); // adjust path as needed
+  };
+
+  const scrollToAbout = (): void => {
+    scrollViewRef.current?.scrollTo({ y: 800, animated: true });
+  };
+
+  const features = [
+    {
+      id: 1,
+      title: 'Real-time Hazard Map',
+      description: 'See flood, blocked paths, poor lighting, and other hazards around you.',
+      icon: 'map-outline' as keyof typeof Ionicons.glyphMap,
+    },
+    {
+      id: 2,
+      title: 'Suggested Safe Routes',
+      description: 'Know routes with community ratings for safety and comfort.',
+      icon: 'navigate-outline' as keyof typeof Ionicons.glyphMap,
+    },
+    {
+      id: 3,
+      title: 'Incident Reporting',
+      description: 'Report harassment, reckless driving, or overcharging without revealing your identity.',
+      icon: 'warning-outline' as keyof typeof Ionicons.glyphMap,
+    },
+    {
+      id: 4,
+      title: 'Community Board',
+      description: 'Ask for or give route suggestions, and rate the reliability of shared routes.',
+      icon: 'people-outline' as keyof typeof Ionicons.glyphMap,
+    },
+    {
+      id: 5,
+      title: 'Accessibility Filters',
+      description: 'Choose routes that are flood-free, well-lit, or wheelchair-friendly.',
+      icon: 'accessibility-outline' as keyof typeof Ionicons.glyphMap,
+    },
+  ];
+
+  const differentiators: string[] = [
+    'No mandatory sign-up — access safety info instantly.',
+    'Real-time hazard pins that expire automatically to avoid outdated info.',
+    'Anonymous incident reports, even without plate numbers.',
+    'Inclusive routing filters like wheelchair-friendly paths.',
+  ];
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ScrollView ref={scrollViewRef} style={styles.container} showsVerticalScrollIndicator={false}>
+      {/* Hero Section */}
+      <LinearGradient
+        colors={['#1a365d', '#2d5a8a', '#4a90e2']}
+        style={styles.heroSection}
+      >
+        <Animated.View
+          style={[
+            styles.heroContent,
+            {
+              opacity: fadeAnim,
+              transform: [{ translateY: slideAnim }],
+            },
+          ]}
+        >
+          {/* Jeep Illustration */}
+          <View style={styles.jeepContainer}>
+            <View style={styles.jeepIllustration}>
+              <View style={styles.jeepBody}>
+                <View style={styles.jeepWindshield} />
+                <View style={styles.jeepDoor} />
+                <View style={styles.jeepWindow} />
+              </View>
+              <View style={styles.jeepWheels}>
+                <View style={styles.wheel} />
+                <View style={styles.wheel} />
+              </View>
+            </View>
+            <View style={styles.mapPin}>
+              <Ionicons name="location" size={24} color="#fff" />
+            </View>
+          </View>
+
+          <Text style={styles.appName}>LakwatSafe</Text>
+          <Text style={styles.tagline}>
+            Your community-powered map for safer, hassle-free lakwatsa
+          </Text>
+          <Text style={styles.subtitle}>From hazards to help — all in one map.</Text>
+
+          <TouchableOpacity
+            style={styles.ctaButton}
+            onPress={handleContinue}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.ctaButtonText}>Continue</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.authButton}
+            onPress={handleAuth}
+          >
+            <Text style={styles.authButtonText}>Sign Up/Log in</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </LinearGradient>
+
+      {/* Features Section */}
+      <View style={styles.featuresSection}>
+        <Text style={styles.sectionTitle}>Features You'll Use Every Day</Text>
+        {features.map((feature, index) => (
+          <TouchableOpacity
+            key={feature.id}
+            style={styles.featureCard}
+            onPress={scrollToAbout}
+            activeOpacity={0.7}
+          >
+            <View style={styles.featureIcon}>
+              <Ionicons name={feature.icon} size={24} color="#4A90E2" />
+            </View>
+            <View style={styles.featureContent}>
+              <Text style={styles.featureTitle}>{feature.title}</Text>
+              <Text style={styles.featureDescription}>{feature.description}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* About Section */}
+      <View style={styles.aboutSection}>
+        <Text style={styles.sectionTitle}>About LakwatSafe</Text>
+        <Text style={styles.aboutSubtitle}>
+          Your community-powered safety companion for everyday commuting.
+        </Text>
+
+        <Text style={styles.aboutDescription}>
+          LakwatSafe is a mobile-first web app that helps commuters travel smarter and safer. 
+          It combines real-time hazard reports, safe route suggestions, and anonymous incident 
+          reporting — all contributed by the community and verified by local authorities where possible.
+        </Text>
+
+        <View style={styles.missionBox}>
+          <Text style={styles.missionText}>
+            To make everyday travel safer, faster, and more informed by connecting commuters 
+            through real-time, crowd-sourced safety updates.
+          </Text>
+        </View>
+
+        <Text style={styles.differentiatorTitle}>What Makes Us Different</Text>
+        {differentiators.map((item, index) => (
+          <View key={index} style={styles.differentiatorItem}>
+            <View style={styles.bulletPoint} />
+            <Text style={styles.differentiatorText}>{item}</Text>
+          </View>
+        ))}
+      </View>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>© 2024 LakwatSafe. Safe travels, always.</Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
+  heroSection: {
+    minHeight: 600,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    paddingHorizontal: 20,
+    paddingTop: 60,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  heroContent: {
+    alignItems: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  jeepContainer: {
+    position: 'relative',
+    marginBottom: 40,
+  },
+  jeepIllustration: {
+    width: 120,
+    height: 80,
+  },
+  jeepBody: {
+    width: 120,
+    height: 60,
+    backgroundColor: '#4A90E2',
+    borderRadius: 8,
+    position: 'relative',
+  },
+  jeepWindshield: {
+    width: 30,
+    height: 25,
+    backgroundColor: '#87CEEB',
     position: 'absolute',
+    top: 5,
+    left: 10,
+    borderRadius: 4,
+  },
+  jeepDoor: {
+    width: 20,
+    height: 30,
+    backgroundColor: '#357ABD',
+    position: 'absolute',
+    top: 15,
+    left: 50,
+    borderRadius: 2,
+  },
+  jeepWindow: {
+    width: 25,
+    height: 20,
+    backgroundColor: '#87CEEB',
+    position: 'absolute',
+    top: 10,
+    right: 15,
+    borderRadius: 3,
+  },
+  jeepWheels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    marginTop: -10,
+  },
+  wheel: {
+    width: 20,
+    height: 20,
+    backgroundColor: '#2c3e50',
+    borderRadius: 10,
+  },
+  mapPin: {
+    position: 'absolute',
+    top: -20,
+    right: -10,
+    width: 30,
+    height: 30,
+    backgroundColor: '#4A90E2',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  appName: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 10,
+  },
+  tagline: {
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 8,
+    paddingHorizontal: 20,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#e6f3ff',
+    textAlign: 'center',
+    marginBottom: 40,
+  },
+  ctaButton: {
+    backgroundColor: '#000',
+    paddingHorizontal: 50,
+    paddingVertical: 15,
+    borderRadius: 25,
+    marginBottom: 15,
+    minWidth: 200,
+  },
+  ctaButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  authButton: {
+    borderColor: '#fff',
+    borderWidth: 1,
+    paddingHorizontal: 40,
+    paddingVertical: 12,
+    borderRadius: 25,
+  },
+  authButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  featuresSection: {
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  featureCard: {
+    flexDirection: 'row',
+    backgroundColor: '#f8f9fa',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  featureIcon: {
+    width: 48,
+    height: 48,
+    backgroundColor: '#e3f2fd',
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  featureContent: {
+    flex: 1,
+  },
+  featureTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+    marginBottom: 4,
+  },
+  featureDescription: {
+    fontSize: 14,
+    color: '#7f8c8d',
+    lineHeight: 20,
+  },
+  aboutSection: {
+    padding: 20,
+    backgroundColor: '#f8f9fa',
+  },
+  aboutSubtitle: {
+    fontSize: 16,
+    color: '#7f8c8d',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  aboutDescription: {
+    fontSize: 14,
+    color: '#2c3e50',
+    lineHeight: 22,
+    marginBottom: 20,
+    textAlign: 'justify',
+  },
+  missionBox: {
+    backgroundColor: '#e8f5e8',
+    padding: 16,
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#4A90E2',
+    marginBottom: 24,
+  },
+  missionText: {
+    fontSize: 14,
+    color: '#2c3e50',
+    fontStyle: 'italic',
+    lineHeight: 20,
+  },
+  differentiatorTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+    marginBottom: 16,
+  },
+  differentiatorItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  bulletPoint: {
+    width: 6,
+    height: 6,
+    backgroundColor: '#4A90E2',
+    borderRadius: 3,
+    marginTop: 6,
+    marginRight: 12,
+  },
+  differentiatorText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#2c3e50',
+    lineHeight: 20,
+  },
+  footer: {
+    padding: 20,
+    backgroundColor: '#2c3e50',
+    alignItems: 'center',
+  },
+  footerText: {
+    color: '#bdc3c7',
+    fontSize: 12,
   },
 });
