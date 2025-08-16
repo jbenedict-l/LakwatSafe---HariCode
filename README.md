@@ -1,50 +1,132 @@
-# Welcome to your Expo app 👋
+# 🚏 LakwatSafe
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A community-driven platform for safer, more accessible commuting — designed for public transport users and pedestrians in urban areas.  
+The app empowers commuters to share, verify, and filter routes based on **safety, accessibility, and comfort**.
 
-## Get started
+---
 
-1. Install dependencies
+## 📍 Features
 
-   ```bash
-   npm install
-   ```
+### **Community Board**
+- **Ask for a route** – Users can request commuting directions.
+- **Route suggestions** – Other users can manually suggest routes (walking + jeep/bus).
+- **Reliability ratings** – Community members rate suggested routes for **accuracy** and **safety**.
 
-2. Start the app
+### **Urban Access Map**
+- **Real-time hazard pins**:
+  - 🌊 Flooded
+  - 🌩 Weather-related
+  - 🚧 Broken / Blocked Path
+  - 💡 Poorly Lit
+- **Pin expiration** – Automatic removal after set hours to avoid outdated info.
+- **Map filters**:
+  - “Flood-Free”
+  - “Well-Lit”
+  - “Wheelchair-Friendly”
+- **Optional photo evidence**.
 
-   ```bash
-   npx expo start
-   ```
+### **Commuter Incident Reporter**
+- **Anonymous reporting** (no account required).
+- Reports viewable by LGUs or commuter advocacy groups.
+- Multiple categories:
+  - Harassment (verbal, physical, sexual)
+  - Overcharging / No change
+  - Reckless driving
+  - Overloading
+  - Discrimination
+  - Unsafe vehicle conditions
+  - Obstruction
+  - Denial of service
+  - Unhygienic conditions
+  - Smoking / vaping inside
+  - Noise disturbance
+  - Other (custom)
+- Detailed metadata:
+  - Vehicle type
+  - Route / landmark
+  - Timestamp
+  - Incident description
+  - Optional photo
 
-In the output, you'll find options to open the app in a
+### **Safety & Comfort Ratings**
+- 1–5 stars for walkability or commute safety per route/area.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### **Low-Bandwidth Mode**
+- Text-only hazard & incident lists for areas with poor connectivity.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 🖥 Pages & Navigation
 
-When you're ready, run:
+### **Landing Page** (Ysa)
+- Jeep illustration
+- Interactive/animated UI (no backend)
+- **CTA:** Continue → Dashboard
 
+### **About Page**
+- Scroll-down interactive UI (no backend)
+
+### **Signup/Login**
+
+### **Dashboard** (Ysa)
+- “Routes Near You” cards
+- Search function
+- Recent updates feed
+- “Are you safe?” quick button
+- **Bottom Navigation Bar**:
+  - **Home:** Dashboard
+  - **Map:** Full-screen interactive map
+    - Tap pins → Popup details, optional photo, posted time
+    - Filters & center-location controls
+  - **Report Incident:** Quick incident reporting page
+
+---
+
+## 🆚 Competition & Differentiation
+
+### Competitors:
+- Sakay.ph
+- Waze
+- Google Maps
+
+### Why We’re Different:
+- **Public transport & pedestrian focus** — jeepneys, buses, tricycles, walking.
+- **Urban access filters** (Flood-Free, Well-Lit, Wheelchair-Friendly).
+- **Anonymous incident reporting** — no account needed.
+- **AI-enhanced route suggestions** using real-time hazards + historical data.
+- **Low-bandwidth mode** for limited internet.
+- **Hyperlocal business integration** — ad revenue can support community.
+
+---
+
+## 🛠 Tech Stack
+
+**Frontend:** React Native + Expo  
+**Backend:** Firebase, Node.js  
+**Map Services:** Google Maps API  
+**AI:** Node.js-based integration for route suggestion improvements
+
+**Google Maps API Key:**  
+`AIzaSyA_WSQosgp9FN2nhOC4zcoGtG_Wxpebmzw`
+
+---
+
+## 📱 Development Setup
+
+### **Requirements**
+- **Mobile Testing:** [Expo Go](https://expo.dev/client) app installed on your phone
+- **Desktop Development:** Android Studio
+
+### **Installation**
 ```bash
-npm run reset-project
-```
+# Clone repository
+git clone <repo_url>
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+# Navigate to project folder
+cd <project_folder>
 
-## Learn more
+# Install dependencies
+npm install
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Start development server
+npx expo start
