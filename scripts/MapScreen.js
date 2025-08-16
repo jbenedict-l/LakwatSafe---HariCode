@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { db } from '../App';
+import { db } from '../firebaseConfig';
 import FilterPills from '../components/FilterPills';
 
 const { width, height } = Dimensions.get('window');
