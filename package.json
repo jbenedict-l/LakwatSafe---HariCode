@@ -1,5 +1,5 @@
 {
-  "name": "likawtsafe",
+  "name": "lakwatsafe",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -15,10 +15,7 @@
     "@react-navigation/bottom-tabs": "^7.4.6",
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.17",
-<<<<<<< HEAD
     "@react-navigation/stack": "^7.4.7",
-=======
->>>>>>> 933ccf0779c6a32394cd423d43f726217ec7e934
     "expo": "~53.0.20",
     "expo-blur": "~14.1.5",
     "expo-constants": "~17.1.7",
@@ -39,30 +36,14 @@
     "react-dom": "19.0.0",
     "react-native": "0.79.5",
     "react-native-gesture-handler": "~2.24.0",
-<<<<<<< HEAD
     "react-native-get-random-values": "~1.11.0",
-=======
-<<<<<<< HEAD
-    "react-native-get-random-values": "~1.11.0",
-=======
->>>>>>> 933ccf0779c6a32394cd423d43f726217ec7e934
->>>>>>> dd89b9a6a7c11d0c94a7837dfbc40a216d6c1f38
     "react-native-maps": "1.20.1",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-vector-icons": "^10.3.0",
     "react-native-web": "~0.20.0",
-<<<<<<< HEAD
     "react-native-webview": "13.13.5"
-=======
-    "react-native-webview": "13.13.5",
-<<<<<<< HEAD
-=======
-    "react-native-get-random-values": "~1.11.0",
->>>>>>> 933ccf0779c6a32394cd423d43f726217ec7e934
-    "expo-linear-gradient": "~14.1.5"
->>>>>>> dd89b9a6a7c11d0c94a7837dfbc40a216d6c1f38
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
