@@ -9,13 +9,12 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const { width } = Dimensions.get('window');
 
-export default function HomeScreen() {
-  const scrollViewRef = useRef<ScrollView>(null);
+const LandingScreen = ({ navigation }) => {
+  const scrollViewRef = useRef(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
 
@@ -34,17 +33,7 @@ export default function HomeScreen() {
     ]).start();
   }, []);
 
-  const handleContinue = () => {
-    // For Expo Router navigation
-    router.push('/(tabs)/explore'); // or wherever you want to go
-  };
-
-  const handleAuth = () => {
-    // Navigate to auth screen
-    router.push('/auth'); // adjust path as needed
-  };
-
-  const scrollToAbout = (): void => {
+  const scrollToAbout = () => {
     scrollViewRef.current?.scrollTo({ y: 800, animated: true });
   };
 
@@ -53,35 +42,35 @@ export default function HomeScreen() {
       id: 1,
       title: 'Real-time Hazard Map',
       description: 'See flood, blocked paths, poor lighting, and other hazards around you.',
-      icon: 'map-outline' as keyof typeof Ionicons.glyphMap,
+      icon: 'map-outline',
     },
     {
       id: 2,
       title: 'Suggested Safe Routes',
       description: 'Know routes with community ratings for safety and comfort.',
-      icon: 'navigate-outline' as keyof typeof Ionicons.glyphMap,
+      icon: 'navigate-outline',
     },
     {
       id: 3,
       title: 'Incident Reporting',
       description: 'Report harassment, reckless driving, or overcharging without revealing your identity.',
-      icon: 'warning-outline' as keyof typeof Ionicons.glyphMap,
+      icon: 'warning-outline',
     },
     {
       id: 4,
       title: 'Community Board',
       description: 'Ask for or give route suggestions, and rate the reliability of shared routes.',
-      icon: 'people-outline' as keyof typeof Ionicons.glyphMap,
+      icon: 'people-outline',
     },
     {
       id: 5,
       title: 'Accessibility Filters',
       description: 'Choose routes that are flood-free, well-lit, or wheelchair-friendly.',
-      icon: 'accessibility-outline' as keyof typeof Ionicons.glyphMap,
+      icon: 'accessibility-outline',
     },
   ];
 
-  const differentiators: string[] = [
+  const differentiators = [
     'No mandatory sign-up — access safety info instantly.',
     'Real-time hazard pins that expire automatically to avoid outdated info.',
     'Anonymous incident reports, even without plate numbers.',
@@ -118,7 +107,7 @@ export default function HomeScreen() {
               </View>
             </View>
             <View style={styles.mapPin}>
-              <Ionicons name="location" size={24} color="#fff" />
+              <Icon name="location" size={24} color="#fff" />
             </View>
           </View>
 
@@ -130,7 +119,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.ctaButton}
-            onPress={handleContinue}
+            onPress={() => navigation.navigate('Main')}
             activeOpacity={0.8}
           >
             <Text style={styles.ctaButtonText}>Continue</Text>
@@ -138,7 +127,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.authButton}
-            onPress={handleAuth}
+            onPress={() => navigation.navigate('Auth')}
           >
             <Text style={styles.authButtonText}>Sign Up/Log in</Text>
           </TouchableOpacity>
@@ -156,7 +145,7 @@ export default function HomeScreen() {
             activeOpacity={0.7}
           >
             <View style={styles.featureIcon}>
-              <Ionicons name={feature.icon} size={24} color="#4A90E2" />
+              <Icon name={feature.icon} size={24} color="#4A90E2" />
             </View>
             <View style={styles.featureContent}>
               <Text style={styles.featureTitle}>{feature.title}</Text>
@@ -200,7 +189,7 @@ export default function HomeScreen() {
       </View>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -216,6 +205,7 @@ const styles = StyleSheet.create({
   },
   heroContent: {
     alignItems: 'center',
+    textAlign: 'center',
   },
   jeepContainer: {
     position: 'relative',
@@ -439,3 +429,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
+
+export default LandingScreen;

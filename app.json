@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "LikawtSafe",
-    "slug": "LikawtSafe",
+    "name": "LakwatSafe",
+    "slug": "LakwatSafe",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "likawtsafe",
+    "scheme": "lakwatSafe",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -16,7 +16,12 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+     "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA_WSQosgp9FN2nhOC4zcoGtG_Wxpebmzw"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
