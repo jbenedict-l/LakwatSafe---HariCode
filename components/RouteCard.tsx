@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-// Define the Route type (or import it if defined elsewhere)
 interface Route {
   id: string;
   origin?: string;

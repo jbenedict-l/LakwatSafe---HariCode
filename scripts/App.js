@@ -3,11 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 // Screens
 import AuthScreen from './screens/AuthScreen';
 import DashboardScreen from './screens/DashboardScreen';
@@ -15,28 +16,15 @@ import LandingScreen from './screens/LandingScreen';
 import MapScreen from './screens/MapScreen';
 import ReportScreen from './screens/ReportScreen';
 
-// Navigation types
-export type RootStackParamList = {
-  Landing: undefined;
-  Auth: undefined;
-  Main: undefined;
-};
-
-export type TabParamList = {
-  Dashboard: undefined;
-  Map: undefined;
-  Report: undefined;
-};
-
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA0QJY16vSNzSW108VBTYOZ-bK2kU2PT8E",
-  authDomain: "lakwatsafe.firebaseapp.com",
-  projectId: "lakwatsafe",
-  storageBucket: "lakwatsafe.firebasestorage.app",
-  messagingSenderId: "646168608601",
-  appId: "1:646168608601:web:b3668f68af892a1dc1d648",
-  measurementId: "G-8F100R29RP"
+  // Replace with your Firebase config
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
@@ -45,44 +33,24 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-const Stack = createStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator<TabParamList>();
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-interface TabIconProps {
-  focused: boolean;
-  color: string;
-  size: number;
-}
-
-interface TabNavigatorScreenOptionsProps {
-  route: {
-    name: keyof TabParamList;
-  };
-}
-
-function TabNavigator(): React.JSX.Element {
-  const getTabBarIcon = (routeName: keyof TabParamList) => {
-    return ({ focused }: TabIconProps) => {
-      let iconName: string;
-      
-      if (routeName === 'Dashboard') {
-        iconName = focused ? 'home' : 'home-outline';
-      } else if (routeName === 'Map') {
-        iconName = focused ? 'map' : 'map-outline';
-      } else if (routeName === 'Report') {
-        iconName = focused ? 'warning' : 'warning-outline';
-      } else {
-        iconName = 'help-outline';
-      }
-      
-      return <Icon name={iconName} size={24} color={focused ? '#4A90E2' : 'gray'} />;
-    };
-  };
-
+function TabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }: TabNavigatorScreenOptionsProps) => ({
-        tabBarIcon: getTabBarIcon(route.name),
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Dashboard') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Map') {
+            iconName = focused ? 'map' : 'map-outline';
+          } else if (route.name === 'Report') {
+            iconName = focused ? 'warning' : 'warning-outline';
+          }
+          return <Icon name={iconName} size={size} color={color} />;
+        },
         tabBarActiveTintColor: '#4A90E2',
         tabBarInactiveTintColor: 'gray',
         tabBarStyle: {
@@ -100,12 +68,12 @@ function TabNavigator(): React.JSX.Element {
   );
 }
 
-export default function App(): React.JSX.Element | null {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+export default function App() {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setIsLoading(false);
     });
